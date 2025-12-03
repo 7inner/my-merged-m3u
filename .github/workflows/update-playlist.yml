@@ -15,28 +15,49 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Download and merge
+    - name: Merge and deduplicate
       run: |
-        # Качаем три плейлиста
+        # Качаем
         curl -s "https://loganettv.vercel.app/all.m3u" -o 1.m3u
         curl -s "https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u" -o 2.m3u
         curl -s "https://smolnp.github.io/IPTVru/IPTVstable.m3u8" -o 3.m3u
         
-        # Просто склеиваем их
+        # Объединяем
+        cat 1.m3u 2.m3u 3.m3u > all.m3u
+        
+        # Создаем чистый файл
         echo "#EXTM3U" > merged.m3u
-        echo "# Автообновляемый" >> merged.m3u
+        echo "# Объединено с удалением дублей" >> merged.m3u
         echo "# $(date)" >> merged.m3u
         echo "" >> merged.m3u
-        cat 1.m3u 2.m3u 3.m3u >> merged.m3u
         
-        # Считаем каналы
-        count=$(grep -c "^#EXTINF" merged.m3u || echo "0")
-        echo "Всего каналов: $count"
+        # Убираем дубли по URL (самый надежный способ)
+        # Собираем уникальные URL
+        grep -v "^#" all.m3u | grep -v "^$" | sort | uniq > unique_urls.txt
+        
+        # Для каждого уникального URL берем первую найденную запись
+        while read url; do
+          if [ ! -z "$url" ]; then
+            # Ищем этот URL в исходном файле и берем строку перед ним (#EXTINF)
+            grep -B1 "^$url$" all.m3u | head -1 >> merged.m3u
+            echo "$url" >> merged.m3u
+          fi
+        done < unique_urls.txt
+        
+        # Считаем
+        count=$(grep -c "^#EXTINF" merged.m3u)
+        total=$(grep -c "^#EXTINF" all.m3u)
+        removed=$((total - count))
+        
+        echo "Было: $total каналов"
+        echo "Стало: $count каналов"
+        echo "Удалено дублей: $removed"
     
     - name: Push back
       run: |
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add merged.m3u
-        git commit -m "update $(date +%Y-%m-%d)" || exit 0
+        count=$(grep -c "^#EXTINF" merged.m3u)
+        git commit -m "update $(date +%Y-%m-%d) - $count channels" || exit 0
         git push
