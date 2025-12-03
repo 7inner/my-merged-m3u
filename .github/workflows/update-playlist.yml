@@ -11,30 +11,57 @@ jobs:
   update:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # Даем права на запись в репозиторий
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}  # Используем наш токен для checkout
 
     - name: Download and merge playlists
       run: |
         # Скачиваем первый плейлист
+        echo "📥 Скачиваю первый плейлист..."
         curl -s -L "https://loganettv.vercel.app/all.m3u" -o playlist1.m3u
+        
         # Скачиваем второй плейлист
+        echo "📥 Скачиваю второй плейлист..."
         curl -s -L "https://raw.githubusercontent.com/CrocoUser/zabava-project/refs/heads/main/zabava-full.m3u" -o playlist2.m3u
+        
+        # Скачиваем ТРЕТИЙ плейлист (новый!)
+        echo "📥 Скачиваю третий плейлист..."
+        curl -s -L "https://smolnp.github.io/IPTVru/IPTVstable.m3u8" -o playlist3.m3u
+        
+        # Проверяем, что файлы не пустые
+        echo "🔍 Проверяю размеры файлов..."
+        ls -la playlist*.m3u
+        
         # Объединяем их в один файл, добавляя заголовок
+        echo "🔗 Объединяю плейлисты..."
         echo "#EXTM3U Merged Playlist - Auto Updated" > merged.m3u
-        echo "# Объединение от $(date -u)" >> merged.m3u
-        cat playlist1.m3u playlist2.m3u >> merged.m3u
+        echo "# Объединение от $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> merged.m3u
+        echo "# Источники:" >> merged.m3u
+        echo "# 1. https://loganettv.vercel.app/all.m3u" >> merged.m3u
+        echo "# 2. https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u" >> merged.m3u
+        echo "# 3. https://smolnp.github.io/IPTVru/IPTVstable.m3u8" >> merged.m3u
+        echo "" >> merged.m3u
+        
+        # Объединяем все три плейлиста
+        cat playlist1.m3u playlist2.m3u playlist3.m3u >> merged.m3u
+        
         # Подсчитываем количество каналов (строк с #EXTINF)
-        COUNT=$(grep -c "^#EXTINF" merged.m3u)
-        echo "Объединенный плейлист содержит примерно $COUNT каналов."
+        COUNT=$(grep -c "^#EXTINF" merged.m3u || echo "0")
+        echo "✅ Объединенный плейлист содержит примерно $COUNT каналов."
 
     - name: Upload merged playlist to repository
       run: |
         # Настраиваем Git
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "actions@github.com"
+        
         # Добавляем, коммитим и пушим изменения
         git add merged.m3u
-        git commit -m "Auto-update: merged playlist $(date -u)" || echo "No changes to commit"
+        git commit -m "Auto-update: merged playlist $(date -u '+%Y-%m-%d %H:%M')" || echo "No changes to commit"
         git push
