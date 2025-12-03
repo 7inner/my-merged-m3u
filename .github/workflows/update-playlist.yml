@@ -15,49 +15,46 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Merge and deduplicate
+    - name: Simple merge - NO DEDUPLICATION
       run: |
-        # Качаем
-        curl -s "https://loganettv.vercel.app/all.m3u" -o 1.m3u
-        curl -s "https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u" -o 2.m3u
-        curl -s "https://smolnp.github.io/IPTVru/IPTVstable.m3u8" -o 3.m3u
+        # Скачиваем все три плейлиста
+        curl -s -L "https://loganettv.vercel.app/all.m3u" -o p1.m3u
+        curl -s -L "https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u" -o p2.m3u
+        curl -s -L "https://smolnp.github.io/IPTVru/IPTVstable.m3u8" -o p3.m3u
         
-        # Объединяем
-        cat 1.m3u 2.m3u 3.m3u > all.m3u
-        
-        # Создаем чистый файл
+        # ПРОСТО СКЛЕИВАЕМ, НЕ ТРОГАЕМ ДУБЛИКАТЫ
         echo "#EXTM3U" > merged.m3u
-        echo "# Объединено с удалением дублей" >> merged.m3u
-        echo "# $(date)" >> merged.m3u
+        echo "# Объединенный плейлист (все три источника)" >> merged.m3u
+        echo "# Обновлено: $(date '+%Y-%m-%d %H:%M:%S')" >> merged.m3u
         echo "" >> merged.m3u
         
-        # Убираем дубли по URL (самый надежный способ)
-        # Собираем уникальные URL
-        grep -v "^#" all.m3u | grep -v "^$" | sort | uniq > unique_urls.txt
-        
-        # Для каждого уникального URL берем первую найденную запись
-        while read url; do
-          if [ ! -z "$url" ]; then
-            # Ищем этот URL в исходном файле и берем строку перед ним (#EXTINF)
-            grep -B1 "^$url$" all.m3u | head -1 >> merged.m3u
-            echo "$url" >> merged.m3u
-          fi
-        done < unique_urls.txt
+        # Склеиваем все как есть
+        cat p1.m3u >> merged.m3u
+        echo "" >> merged.m3u
+        cat p2.m3u >> merged.m3u  
+        echo "" >> merged.m3u
+        cat p3.m3u >> merged.m3u
         
         # Считаем
-        count=$(grep -c "^#EXTINF" merged.m3u)
-        total=$(grep -c "^#EXTINF" all.m3u)
-        removed=$((total - count))
+        count1=$(grep -c "^#EXTINF" p1.m3u || echo "0")
+        count2=$(grep -c "^#EXTINF" p2.m3u || echo "0")
+        count3=$(grep -c "^#EXTINF" p3.m3u || echo "0")
+        total=$((count1 + count2 + count3))
         
-        echo "Было: $total каналов"
-        echo "Стало: $count каналов"
-        echo "Удалено дублей: $removed"
+        echo "Плейлист 1: $count1 каналов"
+        echo "Плейлист 2: $count2 каналов"
+        echo "Плейлист 3: $count3 каналов"
+        echo "Всего в merged.m3u: $total каналов (с дубликатами)"
     
-    - name: Push back
+    - name: Push to repo
       run: |
-        git config user.name "bot"
-        git config user.email "bot@github.com"
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        
         git add merged.m3u
-        count=$(grep -c "^#EXTINF" merged.m3u)
-        git commit -m "update $(date +%Y-%m-%d) - $count channels" || exit 0
+        
+        # Считаем каналы для коммита
+        channel_count=$(grep -c "^#EXTINF" merged.m3u || echo "0")
+        git commit -m "🤖 Автообновление: $(date '+%Y-%m-%d %H:%M') | Каналов: $channel_count" || echo "Нет изменений"
+        
         git push
