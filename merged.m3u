@@ -1,7 +1,11 @@
 #EXTM3U
-# Объединенный плейлист (все три источника)
-# Обновлено: 2025-12-03 08:34:12
-
+# Название: Объединенный автообновляемый плейлист
+# Обновлено: 2025-12-03 08:38:27 UTC
+# Источники:
+# 1. https://loganettv.vercel.app/all.m3u
+# 2. https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u
+# 3. https://smolnp.github.io/IPTVru/IPTVstable.m3u8
+#
 #EXTM3U url-tvg="https://iptvx.one/EPG"
 #EXTINF:-1 group-title="Общие", loganettv all
 https://t.me/loganettv_support
