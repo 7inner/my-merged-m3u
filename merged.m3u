@@ -1,11 +1,7 @@
 #EXTM3U
-# Название: Объединенный автообновляемый плейлист
-# Обновлено: 2025-12-03 08:13:41 UTC
-# Источники:
-# 1. https://loganettv.vercel.app/all.m3u
-# 2. https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u
-# 3. https://smolnp.github.io/IPTVru/IPTVstable.m3u8
-#
+# Автообновляемый
+# Wed Dec  3 08:22:27 UTC 2025
+
 #EXTM3U url-tvg="https://iptvx.one/EPG"
 #EXTINF:-1 group-title="Общие", loganettv all
 https://t.me/loganettv_support
@@ -1233,7 +1229,6 @@ https://d2l4k8y57npunc.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68
 http://178.217.72.72/HOME_4K/index.m3u8
 #EXTINF:-1 group-title="Релакс", Underwater 4K
 https://dt9g97js2xsv9.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-rfve7l4mp37ko/SONOS45.m3u8?ads.device_did=%7BPSID%7D&ads.device_dnt=%7BTARGETOPT%7D&ads.us_privacy=1YNY&ads.app_domain=%7BAPP_DOMAIN%7D&ads.app_name=%7BAPP_NAME%7D&ads.ssai_vendor=SSSLIVE&ads.service_id=US700012OU
-
 #EXTM3U url-tvg="https://iptvx.one/EPG" catchup="append" catchup-days="3" catchup-source="?offset=-${offset}"
 #EXTINF:-1,ИНФОКАНАЛ
 https://github.com/CrocoUser/files/raw/refs/heads/main/infokanal.m3u8
@@ -9130,7 +9125,6 @@ https://s97982.cdn.ngenix.net/hls/CH_R27_GUBERNYA/variant.m3u8
 #EXTINF:-1 group-title="Хабаровск",НТК (Биробиджан)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://s97982.cdn.ngenix.net/hls/CH_R79_NTK/variant.m3u8
-
 #EXTM3U url-tvg="https://iptvx.one/epg/epg_lite.xml.gz"
 #PLAYLIST:IPTVstable
 								
@@ -9851,8 +9845,3 @@ http://emgregion.hostingradio.ru:8064/moscow.retrofm.mp3
 #EXTINF:-1 tvg-id="xit-fm" tvg-logo="https://iptvx.one/picons/xit-fm.png" group-title="Радио",Хит FM
 http://hitfm.hostingradio.ru/hitfm128.mp3
 #EXTINF:-1 tvg-id="yumor-fm" tvg-logo="https://iptvx.one/picons/yumor-fm.png" group-title="Радио",Юмор FM
-📊 Статистика:
-# Плейлист 1: 585 каналов
-# Плейлист 2: 2632 каналов
-# Плейлист 3: 344 каналов
-# Всего каналов: 3561
