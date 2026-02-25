@@ -1,6 +1,6 @@
 #EXTM3U
 # Название: Объединенный автообновляемый плейлист
-# Обновлено: 2026-02-24 04:47:00 UTC
+# Обновлено: 2026-02-25 04:47:18 UTC
 # Источники:
 # 1. https://loganettv.vercel.app/all.m3u
 # 2. https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u
@@ -10,7 +10,7 @@ Payment required
 
 DEPLOYMENT_DISABLED
 
-iad1::78s4t-1771908420083-81b2316c5959
+sfo1::w8klc-1771994838503-cedeb904c5d7
 
 #EXTM3U url-tvg="https://iptvx.one/EPG" catchup="append" catchup-days="3" catchup-source="?offset=-${offset}"
 #EXTINF:-1,ИНФОКАНАЛ
