@@ -1,6 +1,6 @@
 #EXTM3U
 # Название: Объединенный автообновляемый плейлист
-# Обновлено: 2026-06-10 06:59:56 UTC
+# Обновлено: 2026-06-11 07:22:23 UTC
 # Источники:
 # 1. https://loganettv.vercel.app/all.m3u
 # 2. https://raw.githubusercontent.com/CrocoUser/zabava-project/main/zabava-full.m3u
@@ -10,7 +10,7 @@ Payment required
 
 DEPLOYMENT_DISABLED
 
-iad1::5m7jc-1781074796093-61340a1a8c94
+cle1::7ljb2-1781162543404-628988b2d415
 
 #EXTM3U url-tvg="https://iptvx.one/EPG" catchup="append" catchup-days="3" catchup-source="?offset=-${offset}"
 #EXTINF:-1,ИНФОКАНАЛ
@@ -3156,6 +3156,9 @@ https://rt-sib-irk-htlive.cdn.ngenix.net/hls/CH_R01_ZVEZDA_BRATSK/variant.m3u8
 #EXTINF:-1 group-title="Иркутск" tvg-id="aist",Аист ТВ (Иркутск)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://rt-sib-irk-htlive.cdn.ngenix.net/hls/CH_R01_AIST/variant.m3u8
+#EXTINF:-1 group-title="Иркутск",Губерния 38 (Иркутск)
+#EXTVLCOPT:http-user-agent=HlsWinkPlayer
+https://rt-sib-irk-htlive.cdn.ngenix.net/hls/CH_R02_SIB_IRK_GUBERNIYA38/variant.m3u8
 #EXTINF:-1 group-title="Иркутск" tvg-id="aktis",Актис (Ангарск)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://rt-sib-irk-htlive.cdn.ngenix.net/hls/CH_R01_AKTIS/variant.m3u8
@@ -3747,6 +3750,9 @@ https://rt-sib-omsk-htlive.cdn.ngenix.net/hls/CH_R01_TNT_OMSK/variant.m3u8
 #EXTINF:-1 group-title="Омск" tvg-id="muztv-pl4",МУЗ-ТВ (Омск)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://rt-sib-omsk-htlive.cdn.ngenix.net/hls/CH_R04_MUZTV_OMSK/variant.m3u8
+#EXTINF:-1 group-title="Омск" tvg-id="rossia1-pl3",Россия 1 HD (Омск)
+#EXTVLCOPT:http-user-agent=HlsWinkPlayer
+https://rt-sib-omsk-htlive.cdn.ngenix.net/hls/CH_R04_RUSSIA1HD_OMSK/variant.m3u8
 #EXTINF:-1 group-title="Омск" tvg-id="pervy-pl3",Первый (Омская ОБЛ)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://rt-sib-omsk-htlive.cdn.ngenix.net/hls/CH_R03_1TV_OMSKOBL/variant.m3u8
@@ -7440,6 +7446,9 @@ https://s91030.cdn.ngenix.net/hls/CH_R25_TNT_PK/variant.m3u8
 #EXTINF:-1 group-title="Владивосток" tvg-id="muztv-pl7",МУЗ-ТВ (Владивосток)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://s91030.cdn.ngenix.net/hls/CH_R25_MUZTV_PK/variant.m3u8
+#EXTINF:-1 group-title="Владивосток" tvg-id="rossia1-pl9",Россия 1 (+9)
+#EXTVLCOPT:http-user-agent=HlsWinkPlayer
+https://s91030.cdn.ngenix.net/hls/CH_R04_OTT_DV_VLD_RUS8_OTT/variant.m3u8
 #EXTINF:-1 group-title="Владивосток" tvg-id="8vladik",Восьмой канал (Владивосток)
 #EXTVLCOPT:http-user-agent=HlsWinkPlayer
 https://s91030.cdn.ngenix.net/hls/CH_R01_OTT8KANAL/variant.m3u8
